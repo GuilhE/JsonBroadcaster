@@ -23,14 +23,31 @@ On the application side there's a `BroadcastReceiver` listening for theses paylo
 ## Setup
 
 ### For developers
+
+1. Add the library dependency:
+
 ```kotlin
 implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}'")
 ```
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.guilhe/json-broadcast-handler.svg)](https://search.maven.org/search?q=g:com.github.guilhe%20AND%20json-broadcast-handler)
 
-1. Add __broadcast-handler__ dependency;
-2. Your `UiState` classes must be annotated with `kotlinx.serialization.Serializable` ([dependency](https://github.com/Kotlin/kotlinx.serialization));
-3. Create a `BroadcastUiModelHost` implementation to listen for state updates, as shown bellow.
+2. Your `UiState` classes must be annotated with `kotlinx.serialization.Serializable` ([dependency](https://github.com/Kotlin/kotlinx.serialization)):
+
+```kotlin
+@Serializable
+data class UiState(val memberA: String, val memberB: String)
+```
+
+3. Create a `BroadcastUiModelHost` implementation to listen for state updates, as shown bellow:
+
+```kotlin
+private val host = object : BroadcastUiModelHost<UiState>(viewModelScope, UiState.serializer()) {
+    override fun updateState(new: UiState) {
+        _uiState.update { new }
+    }
+}
+```
+4. Add it where it fits best in your project, examples:
 
 If you are using `androidx.lifecycle.ViewModel` you can do the following:
 ```kotlin
@@ -69,7 +86,8 @@ And the beauty of it is that you may choose whatever suits you best: `ViewModel`
 ### For the testing team
 
 1. Google's Android SDK must be installed in order to use command line tools;
-2. Use __desktopApp__ GUI
+2. Use the __desktopApp__ GUI;
+3. Ask for the `applicationId` value and an installed version of the app.
 
 ## Desktop app
 
@@ -93,7 +111,7 @@ To run it you can either:
 - Clone this project and type `./gradlew :androidApp:installDebug` in the terminal;
 - Download the sample `.apk` and install it. Get it [here](./artifacts/matchday.apk).
 
-You can use the following code to get you started:
+The `applicationId` is _com.matchday_ and you can use the following payload to get you started:
 ```json
 {
    "home":{
