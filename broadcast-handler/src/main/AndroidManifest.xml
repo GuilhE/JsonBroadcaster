@@ -1,0 +1,12 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <application>
+        <receiver
+            android:name=".JsonBroadcasterReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="JsonBroadcaster.extra" />
+            </intent-filter>
+        </receiver>
+    </application>
+</manifest>

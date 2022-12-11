@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="App" parent="android:Theme.Material.NoActionBar" />
+
+    <style name="App.AlertDialog" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="buttonBarButtonStyle">@style/App.DialogButtonStyle</item>
+    </style>
+</resources>
