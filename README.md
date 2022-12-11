@@ -26,62 +26,88 @@ On the application side there's a `BroadcastReceiver` listening for theses paylo
 
 1. Add the library dependency:
 
-```kotlin
-implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}'")
-```
-[![Maven Central](https://img.shields.io/maven-central/v/com.github.guilhe/json-broadcast-handler.svg)](https://search.maven.org/search?q=g:com.github.guilhe%20AND%20json-broadcast-handler)
+   ```kotlin
+   implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}'")
+   ```
+   [![Maven Central](https://img.shields.io/maven-central/v/com.github.guilhe/json-broadcast-handler.svg)](https://search.maven.org/search?q=g:com.github.guilhe%20AND%20json-broadcast-handler)
 
 2. Your `UiState` classes must be annotated with `kotlinx.serialization.Serializable` ([dependency](https://github.com/Kotlin/kotlinx.serialization)):
 
-```kotlin
-@Serializable
-data class UiState(val memberA: String, val memberB: String)
-```
+   ```kotlin
+   @Serializable
+   data class UiState(val memberA: String, val memberB: String)
+   ```
 
 3. Create a `BroadcastUiModelHost` implementation to listen for state updates, as shown bellow:
 
-```kotlin
-private val host = object : BroadcastUiModelHost<UiState>(viewModelScope, UiState.serializer()) {
-    override fun updateState(new: UiState) {
-        _uiState.update { new }
-    }
-}
-```
+   ```kotlin
+   private val host = object : BroadcastUiModelHost<UiState>(viewModelScope, UiState.serializer()) {
+       override fun updateState(new: UiState) {
+           _uiState.update { new }
+       }
+   }
+   ```
 4. Add it where it fits best in your project, examples:
 
-If you are using `androidx.lifecycle.ViewModel` you can do the following:
-```kotlin
-class MatchViewModel : ViewModel() {
+   If you are using `androidx.lifecycle.ViewModel` you can do the following:
+   ```kotlin
+   class MatchViewModel : ViewModel() {
+   
+       private val _uiState = MutableStateFlow(MatchUiState(home = Team("PRT", "🇵🇹"), away = Team("BRA", "🇧🇷")))
+       val uiState: StateFlow<MatchUiState> = _uiState
+   
+       private val host = object : BroadcastUiModelHost<MatchUiState>(viewModelScope, MatchUiState.serializer()) {
+           override fun updateState(new: MatchUiState) {
+               _uiState.update { new }
+           }
+       }
+   }
+   ```
+   
+   But actually you don't need a `ViewModel`, you can simply use a `@Composable` for instance:
+   
+   ```kotlin
+   @Composable
+   fun MatchScreen() {
+       var uiState: MatchUiState by remember { mutableStateOf(MatchUiState(home = Team("PRT", "🇵🇹"), away = Team("BRA", "🇧🇷"))) }
+       LaunchedEffect(Unit) {
+           val host = object : BroadcastUiModelHost<MatchUiState>(this, MatchUiState.serializer()) {
+               override fun updateState(new: MatchUiState) {
+                   uiState = new
+               }
+           }
+       }
+       Match(uiState)
+   }
+   ```
 
-    private val _uiState = MutableStateFlow(MatchUiState(home = Team("PRT", "🇵🇹"), away = Team("BRA", "🇧🇷")))
-    val uiState: StateFlow<MatchUiState> = _uiState
+   And the beauty of it is that you may choose whatever suits you best: `ViewModel`, `@Composable`, `Activity`, `Fragment`, etc...
 
-    private val host = object : BroadcastUiModelHost<MatchUiState>(viewModelScope, MatchUiState.serializer()) {
-        override fun updateState(new: MatchUiState) {
-            _uiState.update { new }
-        }
-    }
-}
-```
+5. To disable it, for instance in release builds, override the `receiver` declaration in the `AndroidManifest` by adding a `manifestPlaceholders`property in the `build.gradle`:
 
-But actually you don't need a `ViewModel`, you can simply use a `@Composable` for instance:
-
-```kotlin
-@Composable
-fun MatchScreen() {
-    var uiState: MatchUiState by remember { mutableStateOf(MatchUiState(home = Team("PRT", "🇵🇹"), away = Team("BRA", "🇧🇷"))) }
-    LaunchedEffect(Unit) {
-        val host = object : BroadcastUiModelHost<MatchUiState>(this, MatchUiState.serializer()) {
-            override fun updateState(new: MatchUiState) {
-                uiState = new
-            }
-        }
-    }
-    Match(uiState)
-}
-```
-
-And the beauty of it is that you may choose whatever suits you best: `ViewModel`, `@Composable`, `Activity`, `Fragment`, etc...
+   ```kotlin
+   android {
+       buildTypes {
+           getByName("release") {
+               manifestPlaceholders["enableJsonBroadcastReceiver"] = false
+           }
+   
+           getByName("debug") {
+               manifestPlaceholders["enableJsonBroadcastReceiver"] = true
+           }
+       }
+   }
+   ```
+   ```xml
+   <receiver
+       android:name="com.broadcast.handler.JsonBroadcasterReceiver"
+       android:exported="${enableJsonBroadcastReceiver}"
+       tools:replace="android:exported">
+       <intent-filter>
+           <action android:name="JsonBroadcaster.extra" />
+       </intent-filter>
+   </receiver>
+   ```
 
 ### For the testing team
 
@@ -95,11 +121,11 @@ Although we can use the terminal to send broadcast commands, it's not practical.
 
 To run it you can either:
 - Clone this project and type `./gradlew :desktopApp:run` in the terminal;
-- Download a `TargetFormat.Dmg` (only MacOS for now) and install it. Get it [here](./artifacts/JsonBroadcaster.dmg).
+- Download a `.dmg` (only MacOS for now) and install it. Get it [here](./artifacts/JsonBroadcaster.dmg).
 
 __note:__ due to security reasons, since this app is not from an Identified Developer, MacOS will block its execution. To by pass it you'll need to click in "Open Anyway" in System Settings under Security. It's only needed once:
 
-<img src="./artifacts/security.png">
+<img src="./media/security.png">
 
 (This wont happen with the first approach)
 
