@@ -83,7 +83,7 @@ On the application side there's a `BroadcastReceiver` listening for theses paylo
 
    And the beauty of it is that you may choose whatever suits you best: `ViewModel`, `@Composable`, `Activity`, `Fragment`, etc...
 
-5. To disable it, for instance in release builds, override the `receiver` declaration in the `AndroidManifest` by adding a `manifestPlaceholders`property in the `build.gradle`:
+5. To disable it, for instance in release builds, override the `receiver` declaration in the `AndroidManifest` by adding a `manifestPlaceholders` property in the `build.gradle`:
 
    ```kotlin
    android {
