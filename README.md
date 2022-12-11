@@ -27,7 +27,7 @@ On the application side there's a `BroadcastReceiver` listening for theses paylo
 1. Add the library dependency:
 
 ```kotlin
-implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}'")
+implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}")
 ```
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.guilhe/json-broadcast-handler.svg)](https://search.maven.org/search?q=g:com.github.guilhe%20AND%20json-broadcast-handler)
 
