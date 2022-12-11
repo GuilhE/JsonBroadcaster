@@ -35,15 +35,15 @@ implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}")
 
 ```kotlin
 @Serializable
-data class UiState(val memberA: String, val memberB: String)
+data class UiState(val a: String, val b: Boolean, val c: Int)
 ```
 
 3. Create a `BroadcastUiModelHost` implementation to listen for state updates, as shown bellow:
 
 ```kotlin
-private val host = object : BroadcastUiModelHost<UiState>(viewModelScope, UiState.serializer()) {
+private val host = object : BroadcastUiModelHost<UiState>(coroutineScope, UiState.serializer()) {
     override fun updateState(new: UiState) {
-        _uiState.update { new }
+        //...
     }
 }
 ```
@@ -108,7 +108,7 @@ __note:__ due to security reasons, since this app is not from an Identified Deve
 Inside the __sample__ module you'll find a playground app ready for you to test it.
 
 To run it you can either:
-- Clone this project and type `./gradlew :androidApp:installDebug` in the terminal;
+- Clone this project and type `./gradlew :sample:installDebug` in the terminal;
 - Download the sample `.apk` and install it. Get it [here](./artifacts/matchday.apk).
 
 The `applicationId` is _com.matchday_ and you can use the following payload to get you started:
