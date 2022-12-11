@@ -5,7 +5,6 @@ plugins {
     id("buildlogic.plugins.conventions.library")
     id("kotlinx-serialization")
     id("com.vanniktech.maven.publish")
-    id("signing")
 }
 
 android {
@@ -49,23 +48,4 @@ mavenPublishing {
             developerConnection.set("scm:git:ssh://github.com/GuilhE/JsonBroadcaster.git")
         }
     }
-}
-
-signing {
-    val signingInMemoryKeyId: String
-    val signingInMemoryKey: String
-    val signingInMemoryKeyPassword: String
-
-    if (project.rootProject.file("local.properties").exists()) {
-        with(Properties().apply { load(FileInputStream(File(rootProject.rootDir, "local.properties"))) }) {
-            signingInMemoryKeyId = getProperty("signingInMemoryKeyId")
-            signingInMemoryKey = getProperty("signingInMemoryKey")
-            signingInMemoryKeyPassword = getProperty("signingInMemoryKeyPassword")
-        }
-    } else {
-        signingInMemoryKeyId = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyId")
-        signingInMemoryKey = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyId")
-        signingInMemoryKeyPassword = System.getenv("ORG_GRADLE_PROJECT_signingInMemoryKeyPassword")
-    }
-    useInMemoryPgpKeys(signingInMemoryKeyId, signingInMemoryKey, signingInMemoryKeyPassword)
 }
