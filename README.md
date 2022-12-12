@@ -41,9 +41,9 @@ On the application side there's a `BroadcastReceiver` listening for theses paylo
 3. Create a `BroadcastUiModelHost` implementation to listen for state updates, as shown bellow:
 
    ```kotlin
-   private val host = object : BroadcastUiModelHost<UiState>(viewModelScope, UiState.serializer()) {
+   private val host = object : BroadcastUiModelHost<UiState>(coroutineScope, UiState.serializer()) {
        override fun updateState(new: UiState) {
-           _uiState.update { new }
+           //...
        }
    }
    ```
