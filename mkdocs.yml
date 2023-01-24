@@ -3,7 +3,7 @@ repo_name: GuilhE/JsonBroadcaster
 repo_url: https://github.com/GuilhE/JsonBroadcaster
 site_author: GuilhE
 copyright: 'Copyright (c) 2022-present GuilhE'
-remote_branch: gh-pages
+remote_branch: master
 
 theme:
   name: material
