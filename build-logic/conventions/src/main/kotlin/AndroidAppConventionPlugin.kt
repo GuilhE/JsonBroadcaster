@@ -9,7 +9,7 @@ import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.getByType
 
-class AndroidApplicationConventionPlugin : Plugin<Project> {
+class AndroidAppConventionPlugin : Plugin<Project> {
 
     override fun apply(target: Project) {
         with(target) {
@@ -23,7 +23,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 addKotlinAndroidConfigurations(versionCatalog)
                 addComposeOptions(versionCatalog)
                 addKotlinJvmOptions(buildComposeMetricsParameters())
-//                addProjectGlobalFlavorsAndDimension()
             }
             addComposeDependencies(versionCatalog)
         }
@@ -33,7 +32,6 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
         apply {
             compileSdk = libs.findVersion("androidCompileSdk").get().toString().toInt()
             defaultConfig {
-                targetSdk = libs.findVersion("androidTargetSdk").get().toString().toInt()
                 minSdk = libs.findVersion("androidMinSdk").get().toString().toInt()
 
                 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -46,8 +44,8 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             }
 
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
+                sourceCompatibility = JavaVersion.VERSION_17
+                targetCompatibility = JavaVersion.VERSION_17
             }
 
             lint {
@@ -62,7 +60,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
                 }
             }
 
-            packagingOptions {
+            packaging {
                 // Optimize APK size - remove excess files in the manifest and APK
                 resources {
                     excludes.addAll(

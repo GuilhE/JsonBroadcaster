@@ -6,7 +6,7 @@ import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.kotlin.dsl.dependencies
 import java.io.File
 
-internal fun CommonExtension<*, *, *, *>.addComposeOptions(libs: VersionCatalog) {
+internal fun CommonExtension<*, *, *, *, *>.addComposeOptions(libs: VersionCatalog) {
     buildFeatures {
         compose = true
     }
@@ -19,8 +19,6 @@ internal fun CommonExtension<*, *, *, *>.addComposeOptions(libs: VersionCatalog)
 internal fun Project.addComposeDependencies(libs: VersionCatalog) {
     dependencies {
         add("implementation", libs.findBundle("androidx.compose").get())
-        add("implementation", libs.findBundle("accompanist").get())
-        add("implementation", libs.findLibrary("helpers.coil").get())
     }
 }
 

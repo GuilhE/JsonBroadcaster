@@ -1,15 +1,12 @@
-@file:OptIn(ExperimentalLifecycleComposeApi::class, ExperimentalAnimationApi::class)
-
 package com.matchday.ui
 
-import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.core.*
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.material.Button
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Text
+import androidx.compose.material3.Button
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -19,7 +16,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.compose.ExperimentalLifecycleComposeApi
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.matchday.R
 
@@ -78,12 +74,12 @@ private fun Match(uiState: MatchUiState) {
             Spacer(modifier = Modifier.padding(20.dp))
             Text(
                 text = label,
-                style = MaterialTheme.typography.h4
+                style = MaterialTheme.typography.headlineMedium
             )
             Text(
                 modifier = Modifier.alpha(if (uiState.ongoing) alpha else 1f),
                 text = status.uppercase(),
-                style = MaterialTheme.typography.caption,
+                style = MaterialTheme.typography.bodySmall,
             )
         }
     }

@@ -2,8 +2,8 @@ import java.io.FileInputStream
 import java.util.*
 
 plugins {
-    id("buildlogic.plugins.conventions.application")
-    id("buildlogic.plugins.conventions.hilt")
+    id("buildlogic.plugins.application")
+    id("buildlogic.plugins.hilt")
     id("kotlinx-serialization")
     id("kotlin-parcelize")
 }

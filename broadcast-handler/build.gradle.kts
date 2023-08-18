@@ -1,5 +1,7 @@
+@file:Suppress("UnstableApiUsage")
+
 plugins {
-    id("buildlogic.plugins.conventions.library")
+    id("buildlogic.plugins.library")
     id("kotlinx-serialization")
     id("com.vanniktech.maven.publish")
 }
@@ -13,17 +15,17 @@ dependencies {
     implementation(libs.jetbrains.kotlinx.serialization)
 }
 
-group = "com.github.guilhe"
-version = "1.0.1"
-
 mavenPublishing {
     publishToMavenCentral(com.vanniktech.maven.publish.SonatypeHost.DEFAULT, true)
     signAllPublications()
 
     pom {
+        group = "com.github.guilhe"
+        version = "1.0.1"
         description.set("Update your apps Ui State at runtime.")
         inceptionYear.set("2022")
         url.set("https://github.com/GuilhE/JsonBroadcaster")
+
         licenses {
             license {
                 name.set("The Apache License, Version 2.0")

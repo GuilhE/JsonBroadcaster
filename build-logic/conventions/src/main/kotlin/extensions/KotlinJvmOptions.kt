@@ -13,12 +13,12 @@ internal fun BaseAppModuleExtension.addKotlinJvmOptions(options: List<String> = 
 }
 
 private fun KotlinJvmOptions.addOptions(options: List<String> = emptyList()) {
-    jvmTarget = JavaVersion.VERSION_11.toString()
+    jvmTarget = JavaVersion.VERSION_17.toString()
     freeCompilerArgs = freeCompilerArgs + listOf(
         "-opt-in=kotlin.RequiresOptIn",
         "-opt-in=kotlin.Experimental",
         "-opt-in=kotlinx.coroutines.FlowPreview",
         "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-        "-opt-in=kotlinx.serialization.ExperimentalSerializationApi"
+        "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
     ) + options
 }

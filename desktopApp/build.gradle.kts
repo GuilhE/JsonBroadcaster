@@ -2,15 +2,11 @@ import org.jetbrains.compose.desktop.application.dsl.TargetFormat
 
 plugins {
     kotlin("multiplatform")
-    alias(libs.plugins.jetbrains.compose)
+    id("org.jetbrains.compose")
 }
-
-group = "com.adb.jsonbroadcaster"
-version = "1.0.0"
 
 kotlin {
     jvm {
-        compilations.all { kotlinOptions.jvmTarget = "11" }
         withJava()
     }
     sourceSets {
@@ -30,6 +26,7 @@ compose.desktop {
         nativeDistributions {
             targetFormats(TargetFormat.Dmg)
 
+            group = "com.adb.jsonbroadcaster"
             version = "1.0.0"
             packageVersion = version as String
             packageName = "JsonBroadcaster"
