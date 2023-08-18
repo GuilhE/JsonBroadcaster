@@ -8,12 +8,12 @@ repositories {
 }
 
 java {
-    toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_11.toString()))
+    toolchain.languageVersion.set(JavaLanguageVersion.of(JavaVersion.VERSION_17.toString()))
 }
 
 tasks.withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_11.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
     }
 }
 
@@ -22,14 +22,21 @@ dependencies {
     implementation(libs.gradle.kotlin)
 }
 
-group = "buildlogic.plugins.conventions"
+group = "buildlogic.plugins"
 
 gradlePlugin {
     plugins {
-        register("AndroidApplicationConventionPlugin") {
+        //Application modules
+        register("AndroidAppConventionPlugin") {
             id = "${project.group}.application"
-            implementationClass = "AndroidApplicationConventionPlugin"
+            implementationClass = "AndroidAppConventionPlugin"
         }
+        register("AndroidHiltConventionPlugin") {
+            id = "${project.group}.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+
+        //Library modules
         register("AndroidLibraryConventionPlugin") {
             id = "${project.group}.library"
             implementationClass = "AndroidLibraryConventionPlugin"
@@ -37,10 +44,6 @@ gradlePlugin {
         register("AndroidLibraryComposeConventionPlugin") {
             id = "${project.group}.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
-        }
-        register("AndroidHiltConventionPlugin") {
-            id = "${project.group}.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
         }
     }
 }
