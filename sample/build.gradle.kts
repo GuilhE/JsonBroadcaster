@@ -9,10 +9,10 @@ plugins {
 }
 
 android {
-    namespace = "com.matchday"
+    namespace = "com.jsonbroadcaster.matchday"
 
     defaultConfig {
-        applicationId = "com.matchday"
+        applicationId = "com.jsonbroadcaster.matchday"
         versionCode = 1
         versionName = "1.0.0"
 

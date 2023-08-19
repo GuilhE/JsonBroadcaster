@@ -4,13 +4,22 @@ import java.io.File
 import java.util.concurrent.TimeUnit
 
 object Commands {
-    fun broadcast(applicationId: String, extra: String): List<String> {
+    fun broadcast(applicationId: String, json: String): List<String> {
         return listOf(
             "adb", "shell", "am", "broadcast",
             "-p", applicationId.trim(),
             "-a", "JsonBroadcaster.extra",
-            "-e", "extra", "'${extra.replace("\\s".toRegex(), "")}'"
+            "-e", "extra", "'${json.replace("\\s".toRegex(), "")}'"
         )
+    }
+
+    fun notification(bundleId: String, deviceId: String, filePath: String): List<String> {
+        return listOf("xcrun", "simctl", "push", deviceId, bundleId, filePath)
+    }
+
+    fun appleBootedDevices(): List<String> {
+//        return listOf("xcrun", "simctl", "list", "devices", "|", "grep", "(Booted)")
+        return listOf("xcrun", "simctl", "list", "devices")
     }
 }
 

@@ -1,6 +1,12 @@
 package utils
 
-import kotlinx.coroutines.*
+import commands.Commands
+import commands.runCommand
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
@@ -25,4 +31,38 @@ fun String.isValidJson(): Boolean {
     } catch (ex: SerializationException) {
         false
     }
+}
+
+fun generateAPNS(json: String): String = """
+    {
+        "aps": {
+            "alert": {
+                "title": "State Change Broadcast",
+                "body": "Updating app ui state..."
+            },
+            "badge": 1
+        },        
+        "payload": "${json.replace("\n", "").replace(" ", "").replace("\"", "\\\"")}"
+    }
+""".trimIndent()
+
+fun getAppleBootedDevices(): List<String> {
+    Commands.appleBootedDevices().let { command ->
+        command.runCommand().also { output ->
+            val devices = mutableListOf<String>()
+            val lines = output.lines()
+            for (line in lines) {
+                if (line.contains("Booted")) {
+                    devices.add(line)
+                }
+            }
+            return devices
+        }
+    }
+}
+
+fun extractUDID(device: String): String? {
+    val regex = "\\([A-F0-9\\-]+\\)".toRegex()
+    val matchResult = regex.find(device)
+    return matchResult?.value?.removeSurrounding("(", ")")
 }
