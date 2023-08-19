@@ -8,7 +8,7 @@ Update the UI state of your Android and iOS apps at runtime.
 
 Updating the UI State at runtime is a very useful tool for rapid prototyping and validation purposes. It also adds the benefit that it can be used by the whole testing team, be it developers, designers, quality assurance, etc.
 
-https://user-images.githubusercontent.com/2677139/206770352-d7fc3c9a-4b43-4198-9e14-e00d6f9943a6.mov
+https://github.com/GuilhE/JsonBroadcaster/assets/2677139/10cf81ed-0895-4f68-899d-412e28a43481
 
 ## How does it work
 
@@ -49,14 +49,13 @@ implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}'")
 [![Maven Central](https://img.shields.io/maven-central/v/com.github.guilhe/json-broadcast-handler.svg)](https://search.maven.org/search?q=g:com.github.guilhe%20AND%20json-broadcast-handler)
 
 ### iOS
-Add the library dependency:
 
 #### Swift Package Manager
 
 The Swift implementations are available via the Swift Package Manager. Just add it to your `Package.swift` file:
 ```swift
 dependencies: [
-    .package(url: "https://github.com/GuilhE/JsonBroadcaster.git", from: "${LATEST_VERSION}")
+    .package(url: "https://github.com/GuilhE/JsonBroadcaster.git", from: "1.0.0")
 ]
 ```
 Or add it in Xcode by going to `File` > `Add Packages...` and providing the URL https://github.com/GuilhE/JsonBroadcaster.git.
@@ -65,7 +64,7 @@ Or add it in Xcode by going to `File` > `Add Packages...` and providing the URL 
 
 If you use CocoaPods add the following to your `Podfile`:
 ```ruby 
-pod 'broadcast-handler-ios', '${LATEST_VERSION}'
+pod 'broadcast-handler-ios', '1.0.0'
 ```
 
 ## Usage: developers
@@ -315,8 +314,6 @@ Inside the __sample-ios__ folder you'll find a playground app ready for you to t
 
 To run it:
  - Open it in Xcode and run standard configuration.
-
-The `bundleId` is _com.jsonbroadcaster.matchday_
 
 ## LICENSE
 
