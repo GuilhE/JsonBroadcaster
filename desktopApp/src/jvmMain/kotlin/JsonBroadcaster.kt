@@ -49,9 +49,9 @@ import androidx.compose.ui.window.rememberWindowState
 import commands.Commands
 import commands.runCommand
 import utils.debounce
+import utils.extractUDID
 import utils.generateAPNS
-import utils.getSimulatorDevices
-import utils.getPhysicalDevices
+import utils.getAppleBootedDevices
 import utils.isValidJson
 import java.awt.datatransfer.DataFlavor
 import java.awt.dnd.DnDConstants
@@ -69,12 +69,10 @@ fun main() = application {
     var mayShowResult by remember { mutableStateOf(false) }
     var autoBroadcast by remember { mutableStateOf(false) }
     val hasIds by remember(applicationId, bundleId) { mutableStateOf(applicationId.isNotBlank() || bundleId.isNotBlank()) }
+    var appleBootedIds by remember { mutableStateOf(listOf("Booted")) }
 
     var result by remember { mutableStateOf("") }
     val showResult by remember(result) { derivedStateOf { result.isNotBlank() && mayShowResult } }
-
-    println(getSimulatorDevices())
-    println(getPhysicalDevices())
 
     Window(
         title = "Json Broadcaster",
@@ -95,17 +93,20 @@ fun main() = application {
                             }
                         }
                     }
+                    @Suppress("BlockingMethodInNonBlockingContext")
                     if (bundleId.isNotBlank()) {
-                        val apns = generateAPNS(deviceId = "Simulator Target Bundle", bundleId = bundleId, json = payload)
-
-                        @Suppress("BlockingMethodInNonBlockingContext")
+                        val apns = generateAPNS(json = payload)
                         val file = File.createTempFile("payload", ".apns")
                         file.writeText(apns)
-                        Commands.notification(bundleId, "booted", file.absolutePath).let { command ->
-                            command.runCommand().also { output ->
-                                result = "${Date()}\n\nCommand:\n${command.joinToString(" ")}\n\nOutput:\n$output"
-                                println(result)
-                                file.delete()
+                        appleBootedIds.forEachIndexed { index, id ->
+                            Commands.notification(bundleId, id, file.absolutePath).let { command ->
+                                command.runCommand().also { output ->
+                                    if (index == appleBootedIds.size - 1) {
+                                        file.delete()
+                                    }
+                                    result = "${Date()}\n\nCommand:\n${command.joinToString(" ")}\n\nOutput:\n$output"
+                                    println(result)
+                                }
                             }
                         }
                     }
@@ -113,7 +114,11 @@ fun main() = application {
                 showSettings = { showSettings = true }
             )
 
-            if (showSettings) {
+            AnimatedVisibility(
+                visible = showSettings,
+                enter = fadeIn(),
+                exit = fadeOut(),
+            ) {
                 SettingsPanel(
                     applicationId = applicationId,
                     bundleId = bundleId,
@@ -125,6 +130,7 @@ fun main() = application {
                         mayShowResult = showResult
                         autoBroadcast = broadcast
                         showSettings = false
+                        appleBootedIds = getAppleBootedDevices().map { extractUDID(it) ?: "" }.toList()
                     }
                 )
             }

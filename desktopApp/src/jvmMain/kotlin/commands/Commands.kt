@@ -17,13 +17,9 @@ object Commands {
         return listOf("xcrun", "simctl", "push", deviceId, bundleId, filePath)
     }
 
-    fun simulatorDevices(): List<String> {
-//        return listOf("xcrun", "simctl", "list", "devices", "|", "grep", "-i", "booted")
+    fun appleBootedDevices(): List<String> {
+//        return listOf("xcrun", "simctl", "list", "devices", "|", "grep", "(Booted)")
         return listOf("xcrun", "simctl", "list", "devices")
-    }
-
-    fun physicalDevices(): List<String> {
-        return listOf("xcrun", "xctrace", "list", "devices")
     }
 }
 

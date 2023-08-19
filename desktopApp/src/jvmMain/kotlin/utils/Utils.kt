@@ -33,7 +33,7 @@ fun String.isValidJson(): Boolean {
     }
 }
 
-fun generateAPNS(deviceId: String, bundleId: String, json: String): String = """
+fun generateAPNS(json: String): String = """
     {
         "aps": {
             "alert": {
@@ -41,14 +41,13 @@ fun generateAPNS(deviceId: String, bundleId: String, json: String): String = """
                 "body": "Updating app ui state..."
             },
             "badge": 1
-        },
-        "$deviceId": "$bundleId",
+        },        
         "payload": "${json.replace("\n", "").replace(" ", "").replace("\"", "\\\"")}"
     }
 """.trimIndent()
 
-fun getSimulatorDevices(): List<String> {
-    Commands.simulatorDevices().let { command ->
+fun getAppleBootedDevices(): List<String> {
+    Commands.appleBootedDevices().let { command ->
         command.runCommand().also { output ->
             val devices = mutableListOf<String>()
             val lines = output.lines()
@@ -62,20 +61,8 @@ fun getSimulatorDevices(): List<String> {
     }
 }
 
-fun getPhysicalDevices(): List<String> {
-    Commands.physicalDevices().let { command ->
-        command.runCommand().also { output ->
-            val lines = output.split("\n")
-            val devices = mutableListOf<String>()
-            for (line in lines) {
-                if (line.startsWith("== Devices ==")) {
-                    for (device in lines.subList(lines.indexOf(line) + 1, lines.indexOf("== Simulators =="))) {
-                        devices.add(device)
-                    }
-                    break
-                }
-            }
-            return devices
-        }
-    }
+fun extractUDID(device: String): String? {
+    val regex = "\\([A-F0-9\\-]+\\)".toRegex()
+    val matchResult = regex.find(device)
+    return matchResult?.value?.removeSurrounding("(", ")")
 }
