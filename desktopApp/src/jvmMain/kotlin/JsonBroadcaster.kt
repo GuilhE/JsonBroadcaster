@@ -49,6 +49,7 @@ import androidx.compose.ui.window.rememberWindowState
 import commands.Commands
 import commands.runCommand
 import utils.debounce
+import utils.generateAPNS
 import utils.isValidJson
 import java.awt.datatransfer.DataFlavor
 import java.awt.dnd.DnDConstants
@@ -90,7 +91,17 @@ fun main() = application {
                         }
                     }
                     if (bundleId.isNotBlank()) {
-                        //TODO send command
+                        val apns = generateAPNS(deviceId = "Simulator Target Bundle", bundleId = bundleId, json = payload)
+                        @Suppress("BlockingMethodInNonBlockingContext")
+                        val file = File.createTempFile("payload", ".apns")
+                        file.writeText(apns)
+                        Commands.notification(bundleId, "booted", file.absolutePath).let { command ->
+                            command.runCommand().also {
+                                result = "${Date()}\n\nCommand:\n${command.joinToString(" ")}\n\nOutput:\n$it"
+                                println(result)
+                                file.delete()
+                            }
+                        }
                     }
                 },
                 showSettings = { showSettings = true }

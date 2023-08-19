@@ -1,6 +1,10 @@
 package utils
 
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import kotlinx.serialization.SerializationException
 import kotlinx.serialization.json.Json
 
@@ -26,3 +30,18 @@ fun String.isValidJson(): Boolean {
         false
     }
 }
+
+fun generateAPNS(deviceId: String, bundleId: String, json: String): String =
+    """
+    {
+        "aps": {
+            "alert": {
+                "title": "State Change Broadcast",
+                "body": "Updating app ui state..."
+            },
+            "badge": 1
+        },
+        "$deviceId": "$bundleId",
+        "payload": "${json.replace("\n", "").replace(" ", "").replace("\"", "\\\"")}"
+    }
+""".trimIndent()
