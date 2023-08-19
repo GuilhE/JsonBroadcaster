@@ -1,5 +1,7 @@
 package utils
 
+import commands.Commands
+import commands.runCommand
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -31,8 +33,7 @@ fun String.isValidJson(): Boolean {
     }
 }
 
-fun generateAPNS(deviceId: String, bundleId: String, json: String): String =
-    """
+fun generateAPNS(deviceId: String, bundleId: String, json: String): String = """
     {
         "aps": {
             "alert": {
@@ -45,3 +46,36 @@ fun generateAPNS(deviceId: String, bundleId: String, json: String): String =
         "payload": "${json.replace("\n", "").replace(" ", "").replace("\"", "\\\"")}"
     }
 """.trimIndent()
+
+fun getSimulatorDevices(): List<String> {
+    Commands.simulatorDevices().let { command ->
+        command.runCommand().also { output ->
+            val devices = mutableListOf<String>()
+            val lines = output.lines()
+            for (line in lines) {
+                if (line.contains("Booted")) {
+                    devices.add(line)
+                }
+            }
+            return devices
+        }
+    }
+}
+
+fun getPhysicalDevices(): List<String> {
+    Commands.physicalDevices().let { command ->
+        command.runCommand().also { output ->
+            val lines = output.split("\n")
+            val devices = mutableListOf<String>()
+            for (line in lines) {
+                if (line.startsWith("== Devices ==")) {
+                    for (device in lines.subList(lines.indexOf(line) + 1, lines.indexOf("== Simulators =="))) {
+                        devices.add(device)
+                    }
+                    break
+                }
+            }
+            return devices
+        }
+    }
+}

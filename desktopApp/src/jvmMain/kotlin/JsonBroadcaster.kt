@@ -50,6 +50,8 @@ import commands.Commands
 import commands.runCommand
 import utils.debounce
 import utils.generateAPNS
+import utils.getSimulatorDevices
+import utils.getPhysicalDevices
 import utils.isValidJson
 import java.awt.datatransfer.DataFlavor
 import java.awt.dnd.DnDConstants
@@ -71,6 +73,9 @@ fun main() = application {
     var result by remember { mutableStateOf("") }
     val showResult by remember(result) { derivedStateOf { result.isNotBlank() && mayShowResult } }
 
+    println(getSimulatorDevices())
+    println(getPhysicalDevices())
+
     Window(
         title = "Json Broadcaster",
         state = rememberWindowState(size = windowSize),
@@ -84,20 +89,21 @@ fun main() = application {
                 sendBroadcast = { payload ->
                     if (applicationId.isNotBlank()) {
                         Commands.broadcast(applicationId, payload).let { command ->
-                            command.runCommand().also {
-                                result = "${Date()}\n\nCommand:\n${command.joinToString(" ")}\n\nOutput:\n$it"
+                            command.runCommand().also { output ->
+                                result = "${Date()}\n\nCommand:\n${command.joinToString(" ")}\n\nOutput:\n$output"
                                 println(result)
                             }
                         }
                     }
                     if (bundleId.isNotBlank()) {
                         val apns = generateAPNS(deviceId = "Simulator Target Bundle", bundleId = bundleId, json = payload)
+
                         @Suppress("BlockingMethodInNonBlockingContext")
                         val file = File.createTempFile("payload", ".apns")
                         file.writeText(apns)
                         Commands.notification(bundleId, "booted", file.absolutePath).let { command ->
-                            command.runCommand().also {
-                                result = "${Date()}\n\nCommand:\n${command.joinToString(" ")}\n\nOutput:\n$it"
+                            command.runCommand().also { output ->
+                                result = "${Date()}\n\nCommand:\n${command.joinToString(" ")}\n\nOutput:\n$output"
                                 println(result)
                                 file.delete()
                             }

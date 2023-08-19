@@ -16,6 +16,15 @@ object Commands {
     fun notification(bundleId: String, deviceId: String, filePath: String): List<String> {
         return listOf("xcrun", "simctl", "push", deviceId, bundleId, filePath)
     }
+
+    fun simulatorDevices(): List<String> {
+//        return listOf("xcrun", "simctl", "list", "devices", "|", "grep", "-i", "booted")
+        return listOf("xcrun", "simctl", "list", "devices")
+    }
+
+    fun physicalDevices(): List<String> {
+        return listOf("xcrun", "xctrace", "list", "devices")
+    }
 }
 
 fun List<String>.runCommand(workingDir: File = File("."), timeoutAmount: Long = 60, timeoutUnit: TimeUnit = TimeUnit.SECONDS): String {
