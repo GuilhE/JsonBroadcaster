@@ -160,9 +160,9 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
 2. Create a `BroadcastUIModelHost` instance inside a `class` to listen for state updates, as shown bellow:
 
    ```swift
-   private var uiModelHost: BroadcastUIModelHost<MatchUiState>!
+   private var uiModelHost: BroadcastUIModelHost<UiState>!
    init() {
-        uiModelHost = BroadcastUIModelHost(state) { [weak self] newState in
+        uiModelHost = BroadcastUIModelHost(initState) { [weak self] newState in
             //...
         }        
     }
