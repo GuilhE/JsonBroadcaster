@@ -172,6 +172,9 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
 
    If you are using an `ObservableObject` you can do the following:
    ```swift
+   import SwiftUI
+   import JsonBroadcasterHandler
+   
    class MatchViewModel: ObservableObject {
       private var uiModelHost: BroadcastUIModelHost<MatchUiState>!
       @Published var state: MatchUiState = MatchUiState(home: Team(country:"PRT", flag:"🇵🇹"), away: Team(country:"BRA", flag:"🇧🇷"))
@@ -221,7 +224,7 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
 
    ```swift
    import UIKit
-   import UserNotifications
+   import JsonBroadcasterHandler
 
    class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
        
@@ -310,7 +313,7 @@ Inside the __sample-ios__ folder you'll find a playground app ready for you to t
 
 To run it:
  - Open it in Xcode and run standard configuration.
- - Import `JsonBroadcaster` using your [method](README.md#ios-1) of choice.
+ - Import `JsonBroadcaster` using your [method](#ios-1) of choice.
 
 ## LICENSE
 
