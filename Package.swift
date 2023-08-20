@@ -2,7 +2,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "JsonBroadcasterHandlers",
+    name: "JsonBroadcasterHandler",
     platforms: [.iOS(.v13)],
     products: [
         .library(

@@ -308,6 +308,7 @@ Inside the __sample-ios__ folder you'll find a playground app ready for you to t
 
 To run it:
  - Open it in Xcode and run standard configuration.
+ - Import `JsonBroadcaster` using your [method](README.md#ios-1) of choice.
 
 ## LICENSE
 
