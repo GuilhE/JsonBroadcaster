@@ -4,8 +4,8 @@ extension Notification.Name {
     static let uiStateChangeBroadcast = Notification.Name("UIStateChangeBroadcast")
 }
 
-struct NotificationBroadcaster {
-    static func broadcast(_ notification: UNNotification) -> Void {
+public struct NotificationBroadcaster {
+    public static func broadcast(_ notification: UNNotification) -> Void {
         NotificationCenter.default.post(
             name: Notification.Name.uiStateChangeBroadcast,
             object: nil,

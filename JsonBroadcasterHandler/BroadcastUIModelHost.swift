@@ -3,12 +3,12 @@ import Combine
 
 private let payloadKey = "payload"
 
-class BroadcastUIModelHost<T: Codable> {
+public class BroadcastUIModelHost<T: Codable> {
     private var cancellables: Set<AnyCancellable> = []
     private var currentState: T
     private var stateChangeCallback: (T) -> Void
     
-    init(_ initialState: T, stateChangeCallback: @escaping (T) -> Void) {
+    public init(_ initialState: T, stateChangeCallback: @escaping (T) -> Void) {
         self.currentState = initialState
         self.stateChangeCallback = stateChangeCallback
         
