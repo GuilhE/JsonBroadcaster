@@ -17,7 +17,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import com.matchday.R
+import com.jsonbroadcaster.matchday.R
 
 @Composable
 fun MatchScreen(viewModel: MatchViewModel = hiltViewModel()) {

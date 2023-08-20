@@ -22,7 +22,7 @@ mavenPublishing {
     pom {
         group = "com.github.guilhe"
         version = "1.0.1"
-        description.set("Update your apps Ui State at runtime.")
+        description.set("Update your app's UI State at runtime.")
         inceptionYear.set("2022")
         url.set("https://github.com/GuilhE/JsonBroadcaster")
 
