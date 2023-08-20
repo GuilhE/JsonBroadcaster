@@ -60,7 +60,7 @@ The Swift implementations are available via the Swift Package Manager.
 
 If you use CocoaPods add the following to your `Podfile`:
 ```ruby 
-pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster.git', :tag => '[desired version]'
+pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster.git', :tag => 'JsonBroadcasterHandler-x'
 ```
 
 ## Usage: developers
