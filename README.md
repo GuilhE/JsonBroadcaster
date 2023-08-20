@@ -52,7 +52,9 @@ implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}'")
 
 #### Swift Package Manager
 
-The Swift implementations are available via the Swift Package Manager. Just add it in Xcode by going to `File` > `Add Packages...` and providing the URL https://github.com/GuilhE/JsonBroadcaster.git.
+The Swift implementations are available via the Swift Package Manager.  
+1. In Xcode go to `File` > `Add Packages...` and provide the URL https://github.com/GuilhE/JsonBroadcaster.git;
+2. Use the commit hash from the latest tag `JsonBroadcasterHandler-x`.
 
 #### CocoaPods
 
