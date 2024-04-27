@@ -1,4 +1,4 @@
-<img src="desktopApp/src/jvmMain/resources/icon.png" width="100" align="right"> 
+<img src="desktopApp/src/jvmMain/resources/icon.png" width="100" align="right"> </br>
 
 # JsonBroadcaster
 <a href="https://jetc.dev/issues/188.html"><img src="https://img.shields.io/badge/As_Seen_In-jetc.dev_Newsletter_Issue_%23188-blue?logo=Jetpack+Compose&amp;logoColor=white" alt="As Seen In - jetc.dev Newsletter Issue #188"></a> [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-JsonBroadcaster-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/8481)
