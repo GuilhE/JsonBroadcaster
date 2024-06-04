@@ -1,6 +1,7 @@
-<img src="desktopApp/src/jvmMain/resources/icon.png" width="100" align="right">
+<img src="desktopApp/src/jvmMain/resources/icon.png" width="100" align="right"> </br>
 
 # JsonBroadcaster
+<a href="https://jetc.dev/issues/188.html"><img src="https://img.shields.io/badge/As_Seen_In-jetc.dev_Newsletter_Issue_%23188-blue?logo=Jetpack+Compose&amp;logoColor=white" alt="As Seen In - jetc.dev Newsletter Issue #188"></a> [![Android Arsenal](https://img.shields.io/badge/Android%20Arsenal-JsonBroadcaster-brightgreen.svg?style=flat)](https://android-arsenal.com/details/1/8481)
 
 Update the UI state of your Android and iOS apps at runtime.
 
@@ -52,13 +53,15 @@ implementation("com.github.guilhe:json-broadcast-handler:${LATEST_VERSION}'")
 
 #### Swift Package Manager
 
-The Swift implementations are available via the Swift Package Manager. Just add it in Xcode by going to `File` > `Add Packages...` and providing the URL https://github.com/GuilhE/JsonBroadcaster.git.
+The Swift implementations are available via the Swift Package Manager.  
+1. In Xcode go to `File` > `Add Packages...` and provide the URL https://github.com/GuilhE/JsonBroadcaster.git;
+2. Use the commit hash from the latest tag `JsonBroadcasterHandler-x`.
 
 #### CocoaPods
 
 If you use CocoaPods add the following to your `Podfile`:
 ```ruby 
-pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster.git', :tag => '[desired version]'
+pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster.git', :tag => 'JsonBroadcasterHandler-x'
 ```
 
 ## Usage: developers
@@ -161,9 +164,9 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
 2. Create a `BroadcastUIModelHost` instance inside a `class` to listen for state updates, as shown bellow:
 
    ```swift
-   private var uiModelHost: BroadcastUIModelHost<MatchUiState>!
+   private var uiModelHost: BroadcastUIModelHost<UiState>!
    init() {
-        uiModelHost = BroadcastUIModelHost(state) { [weak self] newState in
+        uiModelHost = BroadcastUIModelHost(initState) { [weak self] newState in
             //...
         }        
     }
@@ -173,6 +176,9 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
 
    If you are using an `ObservableObject` you can do the following:
    ```swift
+   import SwiftUI
+   import JsonBroadcasterHandler
+   
    class MatchViewModel: ObservableObject {
       private var uiModelHost: BroadcastUIModelHost<MatchUiState>!
       @Published var state: MatchUiState = MatchUiState(home: Team(country:"PRT", flag:"🇵🇹"), away: Team(country:"BRA", flag:"🇧🇷"))
@@ -222,7 +228,7 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
 
    ```swift
    import UIKit
-   import UserNotifications
+   import JsonBroadcasterHandler
 
    class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
        
@@ -312,7 +318,7 @@ Inside the __sample-ios__ folder you'll find a playground app ready for you to t
 
 To run it:
  - Open it in Xcode and run standard configuration.
- - Import `JsonBroadcaster` using your [method](README.md#ios-1) of choice.
+ - Import `JsonBroadcaster` using your [method](#ios-1) of choice.
 
 ## LICENSE
 
