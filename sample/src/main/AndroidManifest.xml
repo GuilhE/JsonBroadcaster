@@ -5,7 +5,7 @@
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name_label"
         android:roundIcon="@mipmap/ic_launcher_round"
-        android:theme="@style/App">
+        android:theme="@style/Theme.Design.NoActionBar">
 
         <activity
             android:name="com.matchday.ui.MatchActivity"

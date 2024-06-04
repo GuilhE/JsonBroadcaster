@@ -15,9 +15,11 @@ class MatchViewModel @Inject constructor() : ViewModel() {
     private val _uiState = MutableStateFlow(MatchUiState(home = Team("PRT", "🇵🇹"), away = Team("BRA", "🇧🇷")))
     val uiState: StateFlow<MatchUiState> = _uiState
 
-    private val host = object : BroadcastUiModelHost<MatchUiState>(viewModelScope, MatchUiState.serializer()) {
-        override fun updateState(new: MatchUiState) {
-            _uiState.update { new }
+    init {
+        object : BroadcastUiModelHost<MatchUiState>(viewModelScope, MatchUiState.serializer()) {
+            override fun updateState(new: MatchUiState) {
+                _uiState.update { new }
+            }
         }
     }
 }

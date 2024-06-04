@@ -1,12 +1,9 @@
 package com.matchday.ui
 
-import android.os.Parcelable
-import kotlinx.parcelize.IgnoredOnParcel
-import kotlinx.parcelize.Parcelize
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.Transient
 
 @Serializable
-@Parcelize
 data class MatchUiState(
     val home: Team,
     val away: Team,
@@ -15,13 +12,15 @@ data class MatchUiState(
     private val started: Boolean = false,
     private val running: Boolean = false,
     private val finished: Boolean = false
-) : Parcelable {
+) {
 
-    @IgnoredOnParcel
+    @Transient
     val ongoing: Boolean = started && running && !finished
-    @IgnoredOnParcel
+
+    @Transient
     val paused: Boolean = started && !running && !finished
-    @IgnoredOnParcel
+
+    @Transient
     val ended: Boolean = started && finished
 
     fun startGame(): MatchUiState = copy(started = true, running = true, finished = false)
@@ -33,8 +32,7 @@ data class MatchUiState(
 }
 
 @Serializable
-@Parcelize
 data class Team(
     val country: String,
     val flag: String
-) : Parcelable
+)

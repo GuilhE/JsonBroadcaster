@@ -4,8 +4,7 @@ import java.util.*
 plugins {
     id("buildlogic.plugins.application")
     id("buildlogic.plugins.hilt")
-    id("kotlinx-serialization")
-    id("kotlin-parcelize")
+    alias(libs.plugins.kotlinx.serialization)
 }
 
 android {
@@ -17,13 +16,6 @@ android {
         versionName = "1.0.0"
 
         resValue("string", "app_name_label", "MatchDay")
-    }
-
-    kapt {
-        correctErrorTypes = true
-        javacOptions {
-            option("-Xmaxerrs", 500)
-        }
     }
 
     signingConfigs {
