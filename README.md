@@ -1,4 +1,4 @@
-<img src="desktopApp/src/jvmMain/resources/icon.png" width="100" align="right">
+<img src="desktopApp/src/desktopMain/resources/icon.png" width="100" align="right"> </br></br>
 
 # JsonBroadcaster
 
