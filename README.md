@@ -63,7 +63,8 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
 
 ## Usage: developers
 
-### Android
+<details>
+    <summary>Android</summary>
 
 1. Your `UiState` classes must be annotated with `kotlinx.serialization.Serializable` ([dependency](https://github.com/Kotlin/kotlinx.serialization)):
 
@@ -143,8 +144,10 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
        </intent-filter>
    </receiver>
    ```
+</details>
 
-### iOS
+<details>
+    <summary>iOS</summary>
 
 1. Your `UiState` classes must implement the `Codable` protocol:
 
@@ -244,6 +247,7 @@ pod 'JsonBroadcasterHandler', :git => 'https://github.com/GuilhE/JsonBroadcaster
    }
    ```
 
+</details>
 
 ## Usage: testing team
 

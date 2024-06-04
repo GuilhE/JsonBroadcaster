@@ -2,8 +2,8 @@
 
 plugins {
     id("buildlogic.plugins.library")
-    id("kotlinx-serialization")
-    id("com.vanniktech.maven.publish")
+    alias(libs.plugins.kotlinx.serialization)
+    alias(libs.plugins.vanniktech.plugin)
 }
 
 android {

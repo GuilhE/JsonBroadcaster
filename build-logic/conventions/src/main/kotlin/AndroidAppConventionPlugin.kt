@@ -1,6 +1,7 @@
-@file:Suppress("UnstableApiUsage", "unused")
-
 import com.android.build.gradle.internal.dsl.BaseAppModuleExtension
+import extensions.addComposeDependencies
+import extensions.addKotlinCompileOptions
+import extensions.buildComposeMetricsParameters
 import org.gradle.api.JavaVersion
 import org.gradle.api.Plugin
 import org.gradle.api.Project
@@ -16,14 +17,14 @@ class AndroidAppConventionPlugin : Plugin<Project> {
             with(pluginManager) {
                 apply("com.android.application")
                 apply("org.jetbrains.kotlin.android")
+                apply("org.jetbrains.kotlin.plugin.compose")
             }
 
             val versionCatalog = target.extensions.getByType<VersionCatalogsExtension>().named("libs")
             extensions.configure<BaseAppModuleExtension> {
                 addKotlinAndroidConfigurations(versionCatalog)
-                addComposeOptions(versionCatalog)
-                addKotlinJvmOptions(buildComposeMetricsParameters())
             }
+            addKotlinCompileOptions(buildComposeMetricsParameters())
             addComposeDependencies(versionCatalog)
         }
     }
@@ -32,6 +33,7 @@ class AndroidAppConventionPlugin : Plugin<Project> {
         apply {
             compileSdk = libs.findVersion("androidCompileSdk").get().toString().toInt()
             defaultConfig {
+                targetSdk = libs.findVersion("androidTargetSdk").get().toString().toInt()
                 minSdk = libs.findVersion("androidMinSdk").get().toString().toInt()
 
                 testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -53,6 +55,7 @@ class AndroidAppConventionPlugin : Plugin<Project> {
                 abortOnError = false
             }
 
+            @Suppress("UnstableApiUsage")
             testOptions {
                 unitTests.apply {
                     isReturnDefaultValues = true
@@ -70,7 +73,8 @@ class AndroidAppConventionPlugin : Plugin<Project> {
                             "**/*.version",
                             "**/*.txt",
                             "**/*.xml",
-                            "**/*.properties"
+                            "**/*.properties",
+                            "/META-INF/{AL2.0,LGPL2.1}"
                         )
                     )
                 }

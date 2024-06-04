@@ -31,12 +31,6 @@ gradlePlugin {
             id = "${project.group}.application"
             implementationClass = "AndroidAppConventionPlugin"
         }
-        register("AndroidHiltConventionPlugin") {
-            id = "${project.group}.hilt"
-            implementationClass = "AndroidHiltConventionPlugin"
-        }
-
-        //Library modules
         register("AndroidLibraryConventionPlugin") {
             id = "${project.group}.library"
             implementationClass = "AndroidLibraryConventionPlugin"
@@ -44,6 +38,14 @@ gradlePlugin {
         register("AndroidLibraryComposeConventionPlugin") {
             id = "${project.group}.library.compose"
             implementationClass = "AndroidLibraryComposeConventionPlugin"
+        }
+        register("AndroidHiltConventionPlugin") {
+            id = "${project.group}.hilt"
+            implementationClass = "AndroidHiltConventionPlugin"
+        }
+        register("CMPLibraryConventionPlugin") {
+            id = "${project.group}.kmp.compose"
+            implementationClass = "CMPLibraryConventionPlugin"
         }
     }
 }

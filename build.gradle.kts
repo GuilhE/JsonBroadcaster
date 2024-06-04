@@ -1,30 +1,9 @@
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath(libs.gradle.android.tools)
-        classpath(libs.gradle.android.hilt)
-        classpath(libs.gradle.kotlin)
-        classpath(libs.gradle.kotlin.serialization)
-        classpath(libs.gradle.vanniktech.maven.publish)
-        classpath(libs.gradle.compose.multiplatform)
-    }
-}
-
-allprojects {
-    afterEvaluate {
-        //https://discuss.kotlinlang.org/t/disabling-androidandroidtestrelease-source-set-in-gradle-kotlin-dsl-script
-        project.extensions.findByType<org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension>()?.let { kmpExt ->
-            kmpExt.sourceSets.removeAll {
-                setOf(
-                    "androidAndroidTestRelease",
-                    "androidTestFixtures",
-                    "androidTestFixturesDebug",
-                    "androidTestFixturesRelease",
-                ).contains(it.name)
-            }
-        }
-    }
+plugins {
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.android.hilt) apply false
+    alias(libs.plugins.kotlinx.compose) apply false
+    alias(libs.plugins.kotlinx.compose.compiler) apply false
+    alias(libs.plugins.google.ksp) apply false
+    alias(libs.plugins.vanniktech.plugin) apply false
 }

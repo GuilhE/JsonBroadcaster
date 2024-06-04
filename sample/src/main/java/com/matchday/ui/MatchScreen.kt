@@ -36,6 +36,7 @@ fun MatchScreen(viewModel: MatchViewModel = hiltViewModel()) {
 //    Match(uiState)
 }
 
+@Suppress("InfiniteTransitionLabel", "InfinitePropertiesLabel")
 @Composable
 private fun Match(uiState: MatchUiState) {
     val label: String = remember(uiState) {
@@ -52,6 +53,7 @@ private fun Match(uiState: MatchUiState) {
             else -> "Pre match"
         }
     }
+
     val alpha by rememberInfiniteTransition().animateFloat(
         initialValue = 1f,
         targetValue = 0f,
