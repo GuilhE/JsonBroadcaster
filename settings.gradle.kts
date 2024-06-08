@@ -24,4 +24,4 @@ enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")
 rootProject.name = "JsonBroadcaster"
 include(":broadcast-handler")
 include(":desktopApp")
-include(":sample")
+include(":sample-android")
