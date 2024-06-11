@@ -59,8 +59,6 @@ struct MatchScreen: View {
     }
 }
 
-struct MatchView_Previews: PreviewProvider {
-    static var previews: some View {
-        MatchScreen()
-    }
+#Preview {
+    MatchScreen()
 }
