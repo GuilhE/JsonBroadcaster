@@ -1,6 +1,7 @@
 <img src="desktopApp/src/desktopMain/resources/icon.png" width="100" align="right"> </br></br>
 
 # JsonBroadcaster
+<a href="https://jetc.dev/issues/188.html"><img src="https://img.shields.io/badge/As_Seen_In-jetc.dev_Newsletter_Issue_%23188-blue?logo=Jetpack+Compose&amp;logoColor=white" alt="As Seen In - jetc.dev Newsletter Issue #188"></a>
 
 Update the UI state of your Android and iOS apps at runtime.
 
